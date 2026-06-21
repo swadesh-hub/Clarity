@@ -11,6 +11,8 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
+.dev.vars
+.wrangler/
 
 # SQLite active data / logs
 *.db-journal
@@ -29,3 +31,5 @@ build/
 # OS files
 .DS_Store
 Thumbs.db
+*.log
+
