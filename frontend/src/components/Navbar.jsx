@@ -69,8 +69,8 @@ export default function Navbar() {
         <NavLink to="/focus" className={navLinkClass}>
           Focus Zone
         </NavLink>
-        <NavLink to="/db-explorer" className={navLinkClass}>
-          DB Explorer
+        <NavLink to="/history" className={navLinkClass}>
+          History
         </NavLink>
         <NavLink to="/settings" className={navLinkClass}>
           Settings

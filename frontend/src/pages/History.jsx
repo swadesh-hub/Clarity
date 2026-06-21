@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Database, FileText, ShieldAlert, Trash2, ArrowUpDown, 
+  Brain, FileText, ShieldAlert, Trash2, ArrowUpDown, 
   Search, RefreshCw, ChevronLeft, ChevronRight 
 } from 'lucide-react';
 import { apiService } from '../api/apiService';
 import ScrollReveal from '../components/ScrollReveal';
 
-export default function DbExplorer() {
+export default function History() {
   const [activeTab, setActiveTab] = useState('thoughts'); // thoughts, dumps, safety
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -54,7 +54,7 @@ export default function DbExplorer() {
       setSafetyFlags(flagsList);
     } catch (err) {
       console.error(err);
-      setError("Failed to sync database contents with API server.");
+      setError("Failed to sync history contents with API server.");
     } finally {
       setLoading(false);
     }
@@ -75,7 +75,7 @@ export default function DbExplorer() {
   };
 
   const handleDeleteThought = async (id) => {
-    if (!confirm("Delete thought from SQLite? This cannot be undone.")) return;
+    if (!confirm("Delete this thought? This cannot be undone.")) return;
     try {
       await apiService.deleteItem(id);
       setItems(prev => prev.filter(item => item.id !== id));
@@ -169,8 +169,8 @@ export default function DbExplorer() {
       <ScrollReveal>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="font-serif text-3xl font-bold text-forest">Database Explorer</h1>
-            <p className="text-xs text-charcoal/60 mt-1">Directly inspect and manage raw SQLite tables and cascades.</p>
+            <h1 className="font-serif text-3xl font-bold text-forest">History</h1>
+            <p className="text-xs text-charcoal/60 mt-1">View your brain dumps, categorized thoughts, and safety intercepts.</p>
           </div>
 
           <div className="flex items-center gap-3">
@@ -190,7 +190,7 @@ export default function DbExplorer() {
 
             <button
               onClick={fetchData}
-              title="Refresh database connection"
+              title="Refresh history logs"
               className="p-2.5 bg-white border border-border hover:bg-cream-dark rounded-xl text-charcoal/60 hover:text-forest transition-colors shadow-sm"
             >
               <RefreshCw className="w-4 h-4" />
@@ -217,8 +217,8 @@ export default function DbExplorer() {
                 : 'border-transparent text-charcoal/50 hover:text-forest'
             }`}
           >
-            <Database className="w-4 h-4" />
-            <span>Thoughts Table (`thoughts`)</span>
+            <Brain className="w-4 h-4" />
+            <span>Thoughts</span>
           </button>
 
           <button
@@ -230,7 +230,7 @@ export default function DbExplorer() {
             }`}
           >
             <FileText className="w-4 h-4" />
-            <span>Brain Dumps (`brain_dumps`)</span>
+            <span>Brain Dumps</span>
           </button>
 
           <button
@@ -242,7 +242,7 @@ export default function DbExplorer() {
             }`}
           >
             <ShieldAlert className="w-4 h-4" />
-            <span>Safety Intercepts (`safety_flags`)</span>
+            <span>Safety</span>
           </button>
         </div>
       </ScrollReveal>
@@ -254,11 +254,11 @@ export default function DbExplorer() {
             {loading ? (
               <div className="py-20 text-center flex flex-col items-center justify-center space-y-4">
                 <div className="w-8 h-8 rounded-full border-2 border-sage/55 border-t-forest animate-spin" />
-                <span className="text-xs text-charcoal/50 font-medium">Syncing SQLite schema...</span>
+                <span className="text-xs text-charcoal/50 font-medium">Loading history data...</span>
               </div>
             ) : paginatedList.length === 0 ? (
               <div className="py-20 text-center text-charcoal/40 text-sm italic">
-                No database records found matching active query criteria.
+                No records found matching active query criteria.
               </div>
             ) : (
               <table className="w-full text-sm">

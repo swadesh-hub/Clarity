@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import BrainDumpPage from './pages/BrainDumpPage';
 import TriagePage from './pages/TriagePage';
 import FocusPage from './pages/FocusPage';
-import DbExplorer from './pages/DbExplorer';
+import History from './pages/History';
 import SettingsPage from './pages/SettingsPage';
 import PageTransition from './components/PageTransition';
 
@@ -33,7 +33,7 @@ function App() {
             <Route path="/dump" element={<PageTransition><BrainDumpPage /></PageTransition>} />
             <Route path="/triage" element={<PageTransition><TriagePage /></PageTransition>} />
             <Route path="/focus" element={<PageTransition><FocusPage /></PageTransition>} />
-            <Route path="/db-explorer" element={<PageTransition><DbExplorer /></PageTransition>} />
+            <Route path="/history" element={<PageTransition><History /></PageTransition>} />
             <Route path="/settings" element={<PageTransition><SettingsPage /></PageTransition>} />
           </Routes>
         </main>

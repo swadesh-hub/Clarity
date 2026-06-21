@@ -20,7 +20,7 @@ export default function BrainDumpPage() {
     "Calling AI classifier engine...",
     "Segmenting into atomic thoughts & items...",
     "Calculating priority matrix scores...",
-    "Saving records to SQLite database..."
+    "Saving records to history logs..."
   ];
 
   useEffect(() => {

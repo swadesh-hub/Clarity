@@ -7,6 +7,34 @@ import {
 import { apiService } from '../api/apiService';
 import ScrollReveal from '../components/ScrollReveal';
 
+const PIPELINE_TEMPLATES = [
+  {
+    decide: "Schedule 1:1 sync with manager about project roadmap",
+    task: "Draft design doc for the database optimization",
+    letGo: "Worrying if the client noticed my typo in the slides"
+  },
+  {
+    decide: "Finalize topic proposal for the graduation thesis",
+    task: "Submit chemistry lab report before midnight",
+    letGo: "Comparing my exam prep progress to peers on social media"
+  },
+  {
+    decide: "Call electrician to fix the living room wiring issues",
+    task: "Buy groceries and meal prep for the coming week",
+    letGo: "Regretting staying up too late reading articles last night"
+  },
+  {
+    decide: "Choose a local dentist and schedule my annual cleaning",
+    task: "Pack gym clothes and prep pre-workout for tomorrow morning",
+    letGo: "Feeling guilty about eating that slice of cake at the birthday party"
+  },
+  {
+    decide: "Commit to learning React Native or Swift for the mobile prototype",
+    task: "Set up the initial Git repository and configure the dev environment",
+    letGo: "Overanalyzing whether this side project is unique enough to launch"
+  }
+];
+
 export default function Home() {
   const [stats, setStats] = useState({
     dumpsCount: 0,
@@ -17,6 +45,12 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
   const [dumps, setDumps] = useState([]);
+  const [activeTemplate, setActiveTemplate] = useState(PIPELINE_TEMPLATES[0]);
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * PIPELINE_TEMPLATES.length);
+    setActiveTemplate(PIPELINE_TEMPLATES[randomIndex]);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,21 +145,21 @@ export default function Home() {
               <div className="flex items-center gap-1.5 text-[9px] font-bold text-rose-600 mb-1.5 uppercase">
                 <span className="w-1.5 h-1.5 bg-rose-500 rounded-full" /> Decide Now
               </div>
-              <p className="text-xs text-charcoal font-semibold font-serif">Bajaj Interview preparation steps</p>
+              <p className="text-xs text-charcoal font-semibold font-serif">{activeTemplate.decide}</p>
             </div>
 
             <div className="bg-white/95 rounded-2xl p-4 border border-white shadow-sm rotate-[1deg] translate-x-[-8px] transition-all hover:rotate-0 duration-300">
               <div className="flex items-center gap-1.5 text-[9px] font-bold text-teal-600 mb-1.5 uppercase">
                 <span className="w-1.5 h-1.5 bg-teal-500 rounded-full" /> Task
               </div>
-              <p className="text-xs text-charcoal font-semibold font-serif">Email Prof. for extension on assignment</p>
+              <p className="text-xs text-charcoal font-semibold font-serif">{activeTemplate.task}</p>
             </div>
 
             <div className="bg-white/95 rounded-2xl p-4 border border-white shadow-sm rotate-[-1deg] translate-x-4 transition-all hover:rotate-0 duration-300">
               <div className="flex items-center gap-1.5 text-[9px] font-bold text-slate-500 mb-1.5 uppercase">
                 <span className="w-1.5 h-1.5 bg-slate-500 rounded-full" /> Let Go
               </div>
-              <p className="text-xs text-charcoal/60 font-semibold font-serif line-through">Overthinking whether to learn Rust vs Go today</p>
+              <p className="text-xs text-charcoal/60 font-semibold font-serif line-through">{activeTemplate.letGo}</p>
             </div>
           </div>
         </div>
@@ -311,8 +345,8 @@ export default function Home() {
                 <div className="glass-panel p-6 rounded-2xl space-y-4">
                   <div className="flex items-center justify-between">
                     <h3 className="font-serif text-sm font-bold text-forest">Recent Logs</h3>
-                    <Link to="/db-explorer" className="text-[10px] text-forest hover:text-forest-light font-bold uppercase tracking-wider">
-                      View DB Explorer
+                    <Link to="/history" className="text-[10px] text-forest hover:text-forest-light font-bold uppercase tracking-wider">
+                      View History
                     </Link>
                   </div>
 
