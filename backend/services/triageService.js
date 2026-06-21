@@ -163,10 +163,15 @@ export async function processBrainDump(rawContent, userId = 1) {
     if (!sqliteCategory) continue;
 
     for (const thought of thoughtsList) {
-      const urgency = thought.urgency || 1;
-      const impact = thought.impact || 1;
-      const reversibility = thought.reversibility || 3;
-      const score = thought.priority_score || (urgency * impact * reversibility);
+      const urgency = thought.urgency || 5;
+      const impact = thought.impact || 5;
+      const reversibility = thought.reversibility || 5;
+      // Unified formula: ROUND((urgency * impact) / reversibility, 2)
+      // Lower reversibility = harder to undo = higher priority score
+      const workerScore = thought.priority_score;
+      const score = workerScore != null
+        ? Math.round((workerScore) * 100) / 100
+        : Math.round((urgency * impact) / reversibility * 100) / 100;
       const reasoning = thought.reasoning || null;
 
       const thoughtInsert = await dbQuery.run(

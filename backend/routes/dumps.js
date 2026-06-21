@@ -113,8 +113,9 @@ router.put('/items/:id', async (req, res) => {
     const updResolved = is_resolved !== undefined ? (is_resolved ? 1 : 0) : currentItem.is_resolved;
     const updSummary = resolution_summary !== undefined ? resolution_summary : currentItem.resolution_summary;
 
-    // Recalculate priority score
-    const updScore = updUrgency * updImpact * updReversibility;
+    // Recalculate priority score: ROUND((urgency * impact) / reversibility, 2)
+    // Lower reversibility = harder to undo = higher score
+    const updScore = Math.round((updUrgency * updImpact) / updReversibility * 100) / 100;
 
     // Update the thought in DB
     await dbQuery.run(
