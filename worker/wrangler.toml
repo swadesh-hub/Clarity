@@ -1,0 +1,11 @@
+name = "cognitive-load-triage"
+main = "src/index.js"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+ALLOWED_ORIGIN = "http://localhost:5173"
+
+[[kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+id = "8dfc53bf2081487c97034c7227142374"

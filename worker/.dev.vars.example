@@ -1,0 +1,5 @@
+# Cloudflare Worker Local Environment Variables
+# Fill in your keys locally. NEVER commit .dev.vars to Git.
+
+GROQ_API_KEY=gsk_your_key_here
+GEMINI_API_KEY=your_key_here
