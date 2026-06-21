@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mic, MicOff, Send, HelpCircle, AlertTriangle, FileText, CheckCircle } from 'lucide-react';
+import { Mic, MicOff, Send, HelpCircle, AlertTriangle } from 'lucide-react';
 import { apiService } from '../api/apiService';
+import ScrollReveal from '../components/ScrollReveal';
 
 export default function BrainDumpPage() {
   const [text, setText] = useState('');
@@ -122,99 +123,103 @@ export default function BrainDumpPage() {
 
   return (
     <div className="max-w-4xl mx-auto py-12 px-6">
-      <div className="text-center mb-10">
-        <h1 className="font-outfit text-3xl font-bold tracking-tight bg-gradient-to-r from-white via-indigo-100 to-indigo-400 bg-clip-text text-transparent">
-          Empty Your Mind
-        </h1>
-        <p className="text-gray-400 mt-2 text-sm max-w-lg mx-auto">
-          Type or voice-record a stream-of-consciousness brain dump. Don't worry about punctuation, structure, or priority — we'll classify and filter it for you.
-        </p>
-      </div>
+      <ScrollReveal>
+        <div className="text-center mb-10">
+          <h1 className="font-serif text-4xl font-bold tracking-tight text-forest">
+            Empty Your Mind
+          </h1>
+          <p className="text-charcoal/60 mt-2 text-sm max-w-lg mx-auto leading-relaxed">
+            Type or voice-record a stream-of-consciousness brain dump. Don't worry about grammar, punctuation, or formatting — the AI pipeline will sort, structure, and score everything for you.
+          </p>
+        </div>
+      </ScrollReveal>
 
       {loading ? (
-        <div className="glass-panel p-12 rounded-3xl flex flex-col items-center justify-center min-h-[300px]">
-          <div className="w-16 h-16 rounded-full border-4 border-indigo-600/30 border-t-indigo-400 animate-spin mb-6" />
-          <p className="font-outfit text-lg text-indigo-400 font-semibold tracking-wide animate-pulse">
+        <div className="glass-panel p-12 rounded-3xl flex flex-col items-center justify-center min-h-[300px] shadow-sm">
+          <div className="w-16 h-16 rounded-full border-4 border-sage/40 border-t-forest animate-spin mb-6" />
+          <p className="font-serif text-lg text-forest font-semibold tracking-wide animate-pulse">
             {loadingTexts[loadingStep]}
           </p>
-          <p className="text-xs text-gray-500 mt-3">Connecting to Cloudflare Worker Triage pipeline...</p>
+          <p className="text-xs text-charcoal/50 mt-3">Connecting to Cloudflare Worker Triage pipeline...</p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="relative glass-panel rounded-3xl overflow-hidden p-6 border-white/5 shadow-2xl">
-            <textarea
-              className="w-full min-h-[220px] bg-transparent text-gray-200 placeholder-gray-600 border-0 focus:ring-0 focus:outline-none text-base resize-y leading-relaxed font-sans"
-              placeholder="Start typing your stream of consciousness here... ('I have so much on my plate, need to decide on my elective, email prof, visit mom...')"
-              value={text}
-              onChange={(e) => {
-                setText(e.target.value);
-                if (error) setError(null);
-              }}
-            />
+        <ScrollReveal delay={100}>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="relative glass-panel rounded-3xl overflow-hidden p-6 shadow-sm border-border focus-within:border-forest/30 transition-all duration-300">
+              <textarea
+                className="w-full min-h-[220px] bg-transparent text-charcoal placeholder-charcoal/30 border-0 focus:ring-0 focus:outline-none text-base resize-y leading-relaxed font-sans"
+                placeholder="Start typing your stream of consciousness here... ('I have so much on my plate, need to decide on my elective, email prof, visit mom...')"
+                value={text}
+                onChange={(e) => {
+                  setText(e.target.value);
+                  if (error) setError(null);
+                }}
+              />
 
-            {isRecording && (
-              <div className="absolute top-6 right-6 flex items-center gap-2 bg-rose-500/10 border border-rose-500/30 text-rose-400 px-3 py-1 rounded-full text-xs font-semibold animate-pulse">
-                <span className="w-2 h-2 bg-rose-500 rounded-full" />
-                Listening...
+              {isRecording && (
+                <div className="absolute top-6 right-6 flex items-center gap-2 bg-rose-50 border border-rose-200 text-rose-600 px-3.5 py-1.5 rounded-full text-xs font-semibold animate-pulse">
+                  <span className="w-2 h-2 bg-rose-500 rounded-full" />
+                  Listening...
+                </div>
+              )}
+
+              {/* Formatting tooltips */}
+              <div className="border-t border-border/80 pt-4 mt-4 flex items-center justify-between text-xs text-charcoal/50">
+                <div className="flex items-center gap-1.5">
+                  <HelpCircle className="w-3.5 h-3.5" />
+                  <span>Tips: List decisions, worries, chores, and ideas all in one go.</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleLoadDemo}
+                  className="text-forest hover:text-forest-light font-semibold transition-colors"
+                >
+                  Load Example Dump
+                </button>
+              </div>
+            </div>
+
+            {error && (
+              <div className="flex items-center gap-3 p-4 bg-rose-50 border border-rose-200 text-rose-600 rounded-xl text-sm">
+                <AlertTriangle className="w-4 h-4 shrink-0" />
+                <span>{error}</span>
               </div>
             )}
 
-            {/* Formatting tooltips */}
-            <div className="border-t border-white/5 pt-4 mt-4 flex items-center justify-between text-xs text-gray-500">
-              <div className="flex items-center gap-1.5">
-                <HelpCircle className="w-3.5 h-3.5" />
-                <span>Tips: List decisions, chores, worries, ideas all in one go.</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                {isRecording ? (
+                  <button
+                    type="button"
+                    onClick={stopSpeech}
+                    className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-xs tracking-wider uppercase transition-all duration-200 bg-rose-600 hover:bg-rose-700 text-white shadow-sm"
+                  >
+                    <MicOff className="w-4 h-4" />
+                    Stop Voice
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={startSpeech}
+                    className="flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-xs tracking-wider uppercase transition-all duration-200 bg-white hover:bg-cream-dark text-charcoal border border-border"
+                  >
+                    <Mic className="w-4 h-4" />
+                    Record Voice
+                  </button>
+                )}
               </div>
+
               <button
-                type="button"
-                onClick={handleLoadDemo}
-                className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors"
+                type="submit"
+                className="flex items-center gap-2 px-7 py-3 bg-forest hover:bg-forest-light text-white rounded-full font-semibold text-sm transition-all duration-200 shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={!text.trim()}
               >
-                Load Demo Load
+                <Send className="w-4 h-4" />
+                Triage Thoughts
               </button>
             </div>
-          </div>
-
-          {error && (
-            <div className="flex items-center gap-3 p-4 bg-rose-500/10 border border-rose-500/20 text-rose-400 rounded-xl text-sm">
-              <AlertTriangle className="w-4 h-4 shrink-0" />
-              <span>{error}</span>
-            </div>
-          )}
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              {isRecording ? (
-                <button
-                  type="button"
-                  onClick={stopSpeech}
-                  className="flex items-center gap-2 px-5 py-3 rounded-xl font-medium text-sm transition-all duration-200 bg-rose-600 hover:bg-rose-700 text-white shadow-[0_0_15px_rgba(244,63,94,0.3)]"
-                >
-                  <MicOff className="w-4 h-4" />
-                  Stop Voice Input
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={startSpeech}
-                  className="flex items-center gap-2 px-5 py-3 rounded-xl font-medium text-sm transition-all duration-200 bg-white/5 hover:bg-white/10 text-gray-300 border border-white/10"
-                >
-                  <Mic className="w-4 h-4" />
-                  Record Voice
-                </button>
-              )}
-            </div>
-
-            <button
-              type="submit"
-              className="flex items-center gap-2 px-7 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold text-sm transition-all duration-200 shadow-[0_0_20px_rgba(99,102,241,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={!text.trim()}
-            >
-              <Send className="w-4 h-4" />
-              Triage Thoughts
-            </button>
-          </div>
-        </form>
+          </form>
+        </ScrollReveal>
       )}
     </div>
   );

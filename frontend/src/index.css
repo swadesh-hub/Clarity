@@ -7,49 +7,78 @@
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background-color: #0a0c10;
-  color: #f3f4f6;
+  background-color: #F8F6F2;
+  color: #1A1D1A;
   overflow-x: hidden;
 }
 
-/* Glassmorphism utility classes */
-.glass-panel {
-  background: rgba(17, 22, 34, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Premium Organic Panel and Cards (inspired by easehealth.com) */
+.glass-panel, .card-panel {
+  background: #FFFFFF;
+  border: 1px solid #E6E3DE;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(27, 55, 38, 0.04);
 }
 
-.glass-card {
-  background: rgba(22, 28, 45, 0.4);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.glass-card, .thought-card {
+  background: #FFFFFF;
+  border: 1px solid #E6E3DE;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(27, 55, 38, 0.02);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-card:hover {
-  background: rgba(30, 37, 59, 0.6);
-  border-color: rgba(99, 102, 241, 0.3);
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+.glass-card:hover, .thought-card:hover {
+  border-color: #D4E4D0;
+  background: #FDFDFD;
+  box-shadow: 0 6px 20px rgba(27, 55, 38, 0.06);
   transform: translateY(-2px);
 }
 
-/* Custom Scrollbars */
+/* Custom Scrollbars in Sage Green */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(10, 12, 16, 0.95);
+  background: #F8F6F2;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 3px;
+  background: #D4E4D0;
+  border-radius: 4px;
+  border: 2px solid #F8F6F2;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: #2D5A3D;
+}
+
+/* Page transitions */
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-out;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-in;
+}
+
+/* Scroll reveal utility classes */
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
 }

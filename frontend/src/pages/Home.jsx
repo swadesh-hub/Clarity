@@ -5,6 +5,7 @@ import {
   ArrowRight, ShieldAlert, Sparkles, ChevronRight, Activity
 } from 'lucide-react';
 import { apiService } from '../api/apiService';
+import ScrollReveal from '../components/ScrollReveal';
 
 export default function Home() {
   const [stats, setStats] = useState({
@@ -65,80 +66,120 @@ export default function Home() {
     .sort((a, b) => b.priority_score - a.priority_score)[0];
 
   const getLoadStatus = (p) => {
-    if (p > 75) return { text: 'HIGH OVERLOAD', color: 'text-rose-400', progress: 'bg-rose-500' };
-    if (p > 40) return { text: 'MODERATE LOAD', color: 'text-amber-400', progress: 'bg-amber-500' };
-    return { text: 'LOW LOAD', color: 'text-emerald-400', progress: 'bg-emerald-500' };
+    if (p > 75) return { text: 'HIGH OVERLOAD', color: 'text-rose-600', progress: 'bg-rose-500' };
+    if (p > 40) return { text: 'MODERATE LOAD', color: 'text-amber-600', progress: 'bg-amber-500' };
+    return { text: 'LOW LOAD', color: 'text-emerald-700', progress: 'bg-emerald-600' };
   };
 
   const loadStatus = getLoadStatus(loadPercentage);
 
   return (
-    <div className="max-w-6xl mx-auto py-10 px-8 space-y-10">
-      {/* Welcome Banner */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 glass-panel rounded-3xl p-8 border-indigo-500/10 shadow-[0_0_30px_rgba(99,102,241,0.05)] relative overflow-hidden">
-        <div className="absolute right-0 top-0 bottom-0 w-[30%] bg-gradient-to-l from-indigo-600/10 to-transparent pointer-events-none" />
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 text-indigo-400 text-xs font-bold uppercase tracking-wider">
-            <Sparkles className="w-4 h-4 animate-spin-slow" />
-            <span>AI-Powered Clarity</span>
+    <div className="max-w-6xl mx-auto py-12 px-6 lg:px-8 space-y-12">
+      {/* Hero Section */}
+      <ScrollReveal>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          {/* Left Hero Card */}
+          <div className="lg:col-span-7 bg-sage rounded-3xl p-8 lg:p-12 flex flex-col justify-between border border-sage/20 shadow-[0_4px_30px_rgba(27,55,38,0.03)] relative overflow-hidden min-h-[380px]">
+            <div className="space-y-5 max-w-xl z-10">
+              <div className="inline-flex items-center gap-1.5 text-forest/80 text-xs font-bold uppercase tracking-wider bg-white/40 px-3.5 py-1.5 rounded-full">
+                <Sparkles className="w-3.5 h-3.5 animate-pulse" />
+                <span>AI-Powered Mental Organizer</span>
+              </div>
+              <h1 className="font-serif text-4xl lg:text-5xl font-bold text-forest leading-tight">
+                Dump everything. <br/>Decide one thing.
+              </h1>
+              <p className="text-forest-light text-sm lg:text-base leading-relaxed">
+                Triage unstructured, stream-of-consciousness brain dumps into structured priority matrices. Filter out the noise, schedule tasks, and resolve decision paralysis with ease.
+              </p>
+            </div>
+            <div className="pt-8 z-10">
+              <Link
+                to="/dump"
+                className="inline-flex items-center gap-2 px-6 py-3.5 bg-forest hover:bg-forest-light text-white rounded-full font-semibold text-sm transition-all shadow-[0_4px_20px_rgba(27,55,38,0.12)] hover:shadow-[0_6px_25px_rgba(27,55,38,0.22)] hover:translate-y-[-1px] group"
+              >
+                <span>Start Brain Dump</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
           </div>
-          <h1 className="font-outfit text-3xl font-bold text-white tracking-tight">Welcome to your Clarity Dashboard</h1>
-          <p className="text-gray-400 text-sm max-w-xl">
-            Stream-of-consciousness triage organizes atomic thoughts into priorities, helping you filter noise and resolve decision overload.
-          </p>
+
+          {/* Right Hero Preview Card */}
+          <div className="lg:col-span-5 bg-mist rounded-3xl p-8 flex flex-col justify-center gap-4 relative overflow-hidden border border-mist/30">
+            <span className="text-[10px] text-charcoal/50 font-bold uppercase tracking-widest block mb-2">Triage Pipeline Preview</span>
+            
+            <div className="bg-white/95 rounded-2xl p-4 border border-white shadow-sm rotate-[-1deg] translate-x-2 transition-all hover:rotate-0 duration-300">
+              <div className="flex items-center gap-1.5 text-[9px] font-bold text-rose-600 mb-1.5 uppercase">
+                <span className="w-1.5 h-1.5 bg-rose-500 rounded-full" /> Decide Now
+              </div>
+              <p className="text-xs text-charcoal font-semibold font-serif">Bajaj Interview preparation steps</p>
+            </div>
+
+            <div className="bg-white/95 rounded-2xl p-4 border border-white shadow-sm rotate-[1deg] translate-x-[-8px] transition-all hover:rotate-0 duration-300">
+              <div className="flex items-center gap-1.5 text-[9px] font-bold text-teal-600 mb-1.5 uppercase">
+                <span className="w-1.5 h-1.5 bg-teal-500 rounded-full" /> Task
+              </div>
+              <p className="text-xs text-charcoal font-semibold font-serif">Email Prof. for extension on assignment</p>
+            </div>
+
+            <div className="bg-white/95 rounded-2xl p-4 border border-white shadow-sm rotate-[-1deg] translate-x-4 transition-all hover:rotate-0 duration-300">
+              <div className="flex items-center gap-1.5 text-[9px] font-bold text-slate-500 mb-1.5 uppercase">
+                <span className="w-1.5 h-1.5 bg-slate-500 rounded-full" /> Let Go
+              </div>
+              <p className="text-xs text-charcoal/60 font-semibold font-serif line-through">Overthinking whether to learn Rust vs Go today</p>
+            </div>
+          </div>
         </div>
-        <div className="flex shrink-0 gap-3">
-          <Link
-            to="/dump"
-            className="flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-semibold text-sm transition-all shadow-[0_0_20px_rgba(99,102,241,0.25)]"
-          >
-            <Brain className="w-4 h-4" />
-            <span>Start Brain Dump</span>
-          </Link>
-        </div>
-      </div>
+      </ScrollReveal>
 
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 animate-pulse">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-pulse">
           {[1, 2, 3, 4].map(n => (
-            <div key={n} className="h-28 bg-white/5 rounded-2xl" />
+            <div key={n} className="h-28 bg-white rounded-2xl border border-border" />
           ))}
         </div>
       ) : (
         <>
           {/* Stats Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="glass-panel p-6 rounded-2xl border-white/5">
-              <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block mb-1">Total Brain Dumps</span>
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-outfit font-extrabold text-white">{stats.dumpsCount}</span>
-                <span className="text-xs text-gray-500">entries</span>
+            <ScrollReveal delay={50}>
+              <div className="glass-panel p-6 rounded-2xl">
+                <span className="text-[10px] text-charcoal/50 font-bold uppercase tracking-wider block mb-1">Total Brain Dumps</span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-serif font-extrabold text-forest">{stats.dumpsCount}</span>
+                  <span className="text-xs text-charcoal/60">entries</span>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
 
-            <div className="glass-panel p-6 rounded-2xl border-white/5">
-              <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block mb-1">Active Thoughts</span>
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-outfit font-extrabold text-indigo-400">{stats.activeCount}</span>
-                <span className="text-xs text-gray-500">pending</span>
+            <ScrollReveal delay={100}>
+              <div className="glass-panel p-6 rounded-2xl">
+                <span className="text-[10px] text-charcoal/50 font-bold uppercase tracking-wider block mb-1">Active Thoughts</span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-serif font-extrabold text-forest">{stats.activeCount}</span>
+                  <span className="text-xs text-charcoal/60">pending</span>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
 
-            <div className="glass-panel p-6 rounded-2xl border-white/5">
-              <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider block mb-1">Resolved Tasks</span>
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-outfit font-extrabold text-emerald-400">{stats.resolvedCount}</span>
-                <span className="text-xs text-gray-500">cleared</span>
+            <ScrollReveal delay={150}>
+              <div className="glass-panel p-6 rounded-2xl">
+                <span className="text-[10px] text-charcoal/50 font-bold uppercase tracking-wider block mb-1">Resolved Tasks</span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-serif font-extrabold text-forest">{stats.resolvedCount}</span>
+                  <span className="text-xs text-charcoal/60">cleared</span>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
 
-            <div className="glass-panel p-6 rounded-2xl border-white/5">
-              <span className="text-[10px] text-rose-500/80 font-bold uppercase tracking-wider block mb-1">Safety Intercepts</span>
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-outfit font-extrabold text-rose-400">{stats.flaggedCount}</span>
-                <span className="text-xs text-gray-500">intercepted</span>
+            <ScrollReveal delay={200}>
+              <div className="glass-panel p-6 rounded-2xl">
+                <span className="text-[10px] text-rose-500 font-bold uppercase tracking-wider block mb-1">Safety Intercepts</span>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-serif font-extrabold text-rose-600">{stats.flaggedCount}</span>
+                  <span className="text-xs text-charcoal/60 text-rose-500/70">intercepted</span>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
 
           {/* Main Content Layout */}
@@ -148,82 +189,86 @@ export default function Home() {
             <div className="lg:col-span-2 space-y-8">
               
               {/* Cognitive Load Health Index */}
-              <div className="glass-panel p-6 rounded-2xl border-white/5 space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="font-outfit text-sm font-bold text-white uppercase tracking-wider">Cognitive Load Index</h3>
-                    <p className="text-[10px] text-gray-500 mt-0.5">Calculated by the ratio of pending decisions to active capacity.</p>
-                  </div>
-                  <span className={`text-xs font-bold tracking-wider font-outfit ${loadStatus.color}`}>
-                    {loadStatus.text} ({loadPercentage}%)
-                  </span>
-                </div>
-                
-                <div className="w-full bg-white/5 h-2.5 rounded-full overflow-hidden">
-                  <div className={`h-full rounded-full transition-all duration-500 ${loadStatus.progress}`} style={{ width: `${loadPercentage}%` }} />
-                </div>
-
-                <div className="grid grid-cols-4 gap-2 pt-2 text-center">
-                  <div className="bg-white/[0.02] border border-white/5 rounded-lg p-2.5">
-                    <span className="block text-xs font-bold text-rose-400 mb-0.5">{categoryCounts.decide_now}</span>
-                    <span className="text-[8px] text-gray-500 font-bold uppercase tracking-wider">Decide</span>
-                  </div>
-                  <div className="bg-white/[0.02] border border-white/5 rounded-lg p-2.5">
-                    <span className="block text-xs font-bold text-amber-400 mb-0.5">{categoryCounts.needs_info}</span>
-                    <span className="text-[8px] text-gray-500 font-bold uppercase tracking-wider">Needs Info</span>
-                  </div>
-                  <div className="bg-white/[0.02] border border-white/5 rounded-lg p-2.5">
-                    <span className="block text-xs font-bold text-teal-400 mb-0.5">{categoryCounts.task}</span>
-                    <span className="text-[8px] text-gray-500 font-bold uppercase tracking-wider">Tasks</span>
-                  </div>
-                  <div className="bg-white/[0.02] border border-white/5 rounded-lg p-2.5">
-                    <span className="block text-xs font-bold text-slate-400 mb-0.5">{categoryCounts.let_go}</span>
-                    <span className="text-[8px] text-gray-500 font-bold uppercase tracking-wider">Let Go</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Top Focus Highlight */}
-              {topFocus ? (
-                <div className="glass-panel p-6 rounded-2xl border-indigo-500/10 shadow-[0_0_25px_rgba(99,102,241,0.03)] space-y-4">
+              <ScrollReveal delay={100}>
+                <div className="glass-panel p-8 rounded-3xl space-y-5">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] text-indigo-400 font-bold uppercase tracking-wider">Top Priority Task</span>
-                    <span className="text-[9px] bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 px-2 py-0.5 rounded font-bold uppercase">
-                      PRIORITY: {topFocus.priority_score}
+                    <div>
+                      <h3 className="font-serif text-lg font-bold text-forest">Cognitive Load Index</h3>
+                      <p className="text-xs text-charcoal/60 mt-0.5">Calculated by the ratio of pending decisions to active capacity.</p>
+                    </div>
+                    <span className={`text-xs font-bold tracking-wider font-outfit px-3 py-1 rounded-full bg-cream ${loadStatus.color}`}>
+                      {loadStatus.text} ({loadPercentage}%)
                     </span>
                   </div>
                   
-                  <p className="text-base text-gray-200 leading-relaxed font-sans">{topFocus.original_text}</p>
-                  
-                  {topFocus.follow_up_question && (
-                    <div className="bg-amber-500/5 border border-amber-500/15 rounded-xl p-4 flex gap-3">
-                      <div className="shrink-0 text-amber-400"><Zap className="w-4 h-4 mt-0.5" /></div>
-                      <div>
-                        <span className="text-[9px] text-amber-400 font-bold uppercase tracking-wider block mb-0.5">Sharpening Question</span>
-                        <p className="text-xs text-gray-300 leading-normal">{topFocus.follow_up_question}</p>
-                      </div>
-                    </div>
-                  )}
+                  <div className="w-full bg-cream-dark h-3 rounded-full overflow-hidden">
+                    <div className={`h-full rounded-full transition-all duration-500 ${loadStatus.progress}`} style={{ width: `${loadPercentage}%` }} />
+                  </div>
 
-                  <div className="flex justify-end pt-2 border-t border-white/5">
-                    <Link
-                      to="/focus"
-                      className="flex items-center gap-1.5 text-xs text-indigo-400 hover:text-indigo-300 font-semibold transition-all group"
-                    >
-                      <span>Resolve in Focus Zone</span>
-                      <ChevronRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
-                    </Link>
+                  <div className="grid grid-cols-4 gap-3 pt-2 text-center">
+                    <div className="bg-cream rounded-xl p-3 border border-border/40">
+                      <span className="block text-sm font-bold text-rose-600 mb-0.5">{categoryCounts.decide_now}</span>
+                      <span className="text-[8px] text-charcoal/50 font-bold uppercase tracking-wider">Decide</span>
+                    </div>
+                    <div className="bg-cream rounded-xl p-3 border border-border/40">
+                      <span className="block text-sm font-bold text-amber-600 mb-0.5">{categoryCounts.needs_info}</span>
+                      <span className="text-[8px] text-charcoal/50 font-bold uppercase tracking-wider">Needs Info</span>
+                    </div>
+                    <div className="bg-cream rounded-xl p-3 border border-border/40">
+                      <span className="block text-sm font-bold text-teal-600 mb-0.5">{categoryCounts.task}</span>
+                      <span className="text-[8px] text-charcoal/50 font-bold uppercase tracking-wider">Tasks</span>
+                    </div>
+                    <div className="bg-cream rounded-xl p-3 border border-border/40">
+                      <span className="block text-sm font-bold text-slate-500 mb-0.5">{categoryCounts.let_go}</span>
+                      <span className="text-[8px] text-charcoal/50 font-bold uppercase tracking-wider">Let Go</span>
+                    </div>
                   </div>
                 </div>
-              ) : (
-                <div className="glass-panel p-8 rounded-2xl border-dashed border-white/5 text-center flex flex-col items-center justify-center py-16">
-                  <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
-                    <Sparkles className="w-5 h-5 text-emerald-400" />
+              </ScrollReveal>
+
+              {/* Top Focus Highlight */}
+              <ScrollReveal delay={150}>
+                {topFocus ? (
+                  <div className="glass-panel p-8 rounded-3xl border-l-4 border-l-sage space-y-5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] text-forest/70 font-bold uppercase tracking-wider bg-sage/50 px-2.5 py-1 rounded">Top Leverage Action</span>
+                      <span className="text-[10px] bg-forest/10 text-forest px-2.5 py-0.5 rounded font-bold uppercase">
+                        PRIORITY: {topFocus.priority_score}
+                      </span>
+                    </div>
+                    
+                    <p className="text-lg text-charcoal font-serif font-medium leading-relaxed">{topFocus.original_text}</p>
+                    
+                    {topFocus.follow_up_question && (
+                      <div className="bg-amber-50/50 border border-amber-200/50 rounded-2xl p-5 flex gap-4">
+                        <div className="shrink-0 text-amber-600"><Zap className="w-5 h-5 mt-0.5" /></div>
+                        <div>
+                          <span className="text-[10px] text-amber-700 font-bold uppercase tracking-wider block mb-0.5">Decision Catalyst</span>
+                          <p className="text-sm text-charcoal/90 leading-relaxed font-medium">{topFocus.follow_up_question}</p>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="flex justify-end pt-3 border-t border-border">
+                      <Link
+                        to="/focus"
+                        className="flex items-center gap-1.5 text-xs text-forest hover:text-forest-light font-bold transition-all group"
+                      >
+                        <span>Resolve in Focus Zone</span>
+                        <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                      </Link>
+                    </div>
                   </div>
-                  <h4 className="font-outfit text-sm font-bold text-white">Your Mind is Clear</h4>
-                  <p className="text-xs text-gray-500 max-w-xs mt-1">No unresolved items in 'Decide Now'. Perform a brain dump to identify new priorities.</p>
-                </div>
-              )}
+                ) : (
+                  <div className="glass-panel p-10 rounded-3xl border-dashed border-border text-center flex flex-col items-center justify-center py-16">
+                    <div className="w-12 h-12 rounded-full bg-sage/40 flex items-center justify-center mb-4">
+                      <CheckCircle className="w-5 h-5 text-forest" />
+                    </div>
+                    <h4 className="font-serif text-base font-bold text-forest">Your Mind is Clear</h4>
+                    <p className="text-xs text-charcoal/50 max-w-xs mt-1">No unresolved items in 'Decide Now'. Perform a brain dump to identify new priorities.</p>
+                  </div>
+                )}
+              </ScrollReveal>
 
             </div>
 
@@ -231,59 +276,63 @@ export default function Home() {
             <div className="space-y-8">
               
               {/* Quick Navigation links */}
-              <div className="glass-panel p-6 rounded-2xl border-white/5 space-y-3">
-                <h3 className="font-outfit text-xs font-bold text-white uppercase tracking-wider mb-2">Triage Quick Links</h3>
-                
-                <Link to="/dump" className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 border border-white/5 transition-all text-xs font-semibold text-gray-300 group">
-                  <div className="flex items-center gap-2">
-                    <Brain className="w-4 h-4 text-indigo-400" />
-                    <span>Ingest Thoughts</span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-gray-600 transition-transform group-hover:translate-x-0.5" />
-                </Link>
+              <ScrollReveal delay={150}>
+                <div className="glass-panel p-6 rounded-2xl space-y-3">
+                  <h3 className="font-serif text-sm font-bold text-forest mb-2">Triage Quick Links</h3>
+                  
+                  <Link to="/dump" className="flex items-center justify-between p-3.5 rounded-xl hover:bg-cream/50 border border-border/80 transition-all text-xs font-semibold text-charcoal group">
+                    <div className="flex items-center gap-2.5">
+                      <Brain className="w-4 h-4 text-forest" />
+                      <span>Ingest Thoughts</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-charcoal/40 transition-transform group-hover:translate-x-0.5" />
+                  </Link>
 
-                <Link to="/triage" className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 border border-white/5 transition-all text-xs font-semibold text-gray-300 group">
-                  <div className="flex items-center gap-2">
-                    <Layout className="w-4 h-4 text-teal-400" />
-                    <span>Triage Board</span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-gray-600 transition-transform group-hover:translate-x-0.5" />
-                </Link>
+                  <Link to="/triage" className="flex items-center justify-between p-3.5 rounded-xl hover:bg-cream/50 border border-border/80 transition-all text-xs font-semibold text-charcoal group">
+                    <div className="flex items-center gap-2.5">
+                      <Layout className="w-4 h-4 text-forest" />
+                      <span>Triage Board</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-charcoal/40 transition-transform group-hover:translate-x-0.5" />
+                  </Link>
 
-                <Link to="/focus" className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 border border-white/5 transition-all text-xs font-semibold text-gray-300 group">
-                  <div className="flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-amber-400" />
-                    <span>Focus Zone</span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-gray-600 transition-transform group-hover:translate-x-0.5" />
-                </Link>
-              </div>
-
-              {/* Recent Dumps Logs */}
-              <div className="glass-panel p-6 rounded-2xl border-white/5 space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-outfit text-xs font-bold text-white uppercase tracking-wider">Recent Logs</h3>
-                  <Link to="/db-explorer" className="text-[10px] text-indigo-400 hover:text-indigo-300 font-bold uppercase tracking-wider">
-                    View DB Explorer
+                  <Link to="/focus" className="flex items-center justify-between p-3.5 rounded-xl hover:bg-cream/50 border border-border/80 transition-all text-xs font-semibold text-charcoal group">
+                    <div className="flex items-center gap-2.5">
+                      <Zap className="w-4 h-4 text-forest" />
+                      <span>Focus Zone</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-charcoal/40 transition-transform group-hover:translate-x-0.5" />
                   </Link>
                 </div>
+              </ScrollReveal>
 
-                <div className="space-y-3 max-h-[250px] overflow-y-auto pr-1">
-                  {dumps.length === 0 ? (
-                    <p className="text-xs text-gray-600 text-center py-6">No raw brain dumps logged yet.</p>
-                  ) : (
-                    dumps.slice(0, 4).map(dump => (
-                      <div key={dump.id} className="p-3 bg-white/[0.01] border border-white/5 rounded-xl text-[11px] leading-relaxed">
-                        <div className="flex items-center justify-between text-gray-500 mb-1 font-mono text-[9px]">
-                          <span>LOG #{dump.id}</span>
-                          <span>{new Date(dump.created_at).toLocaleDateString()}</span>
+              {/* Recent Dumps Logs */}
+              <ScrollReveal delay={200}>
+                <div className="glass-panel p-6 rounded-2xl space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-serif text-sm font-bold text-forest">Recent Logs</h3>
+                    <Link to="/db-explorer" className="text-[10px] text-forest hover:text-forest-light font-bold uppercase tracking-wider">
+                      View DB Explorer
+                    </Link>
+                  </div>
+
+                  <div className="space-y-3 max-h-[250px] overflow-y-auto pr-1">
+                    {dumps.length === 0 ? (
+                      <p className="text-xs text-charcoal/40 text-center py-8 italic">No raw brain dumps logged yet.</p>
+                    ) : (
+                      dumps.slice(0, 4).map(dump => (
+                        <div key={dump.id} className="p-3 bg-cream/40 border border-border rounded-xl text-[11px] leading-relaxed">
+                          <div className="flex items-center justify-between text-charcoal/40 mb-1 font-mono text-[9px]">
+                            <span>LOG #{dump.id}</span>
+                            <span>{new Date(dump.created_at).toLocaleDateString()}</span>
+                          </div>
+                          <p className="text-charcoal/80 line-clamp-2">{dump.raw_content}</p>
                         </div>
-                        <p className="text-gray-300 line-clamp-2">{dump.raw_content}</p>
-                      </div>
-                    ))
-                  )}
+                      ))
+                    )}
+                  </div>
                 </div>
-              </div>
+              </ScrollReveal>
 
             </div>
 
