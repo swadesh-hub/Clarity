@@ -1,0 +1,20 @@
+# Cognitive Load Triage — Cloudflare Worker Configuration
+
+name = "cognitive-load-triage"
+main = "src/index.js"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+ALLOWED_ORIGIN = "http://localhost:5173"
+
+# KV namespace for per-IP rate limiting.
+# Create with:  wrangler kv:namespace create RATE_LIMIT_KV
+# Then paste the id below.
+[[kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+id = "8dfc53bf2081487c97034c7227142374"
+
+# Secrets (set via CLI, never in this file):
+# wrangler secret put GROQ_API_KEY
+# wrangler secret put GEMINI_API_KEY

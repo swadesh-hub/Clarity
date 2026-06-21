@@ -1,0 +1,15 @@
+{
+  "name": "cognitive-load-triage",
+  "version": "1.0.0",
+  "description": "Cognitive Load Triage — Dump everything. Decide one thing.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node --test src/lib/*.test.js"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}
