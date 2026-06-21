@@ -1,0 +1,31 @@
+# Node dependencies
+node_modules/
+
+# Production build outputs
+dist/
+build/
+
+# Environment configurations
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# SQLite active data / logs
+*.db-journal
+*.db-wal
+*.db-shm
+
+# IDE / Editor configurations
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS files
+.DS_Store
+Thumbs.db
